@@ -1,22 +1,18 @@
-<template>
-  <div class="editor-view">
-    <div>
-      <label>内容：</label>
-      <input v-model="input.text" placeholder="メモのタイトル">
-    </div>
-    <div>
-      <label>日付：</label>
-      <input type="date" v-model="input.date">
-    </div>
-    <div>
-      <label>タグ：</label>
-      <input v-model="input.tags" placeholder="空白区切りで指定">
-    </div>
-    <div>
-      <button @click="save">保存</button>
-    </div>
-  </div>
+<template lang="pug">
+  .editor-view
+    div
+      label 内容：
+      input(v-model="input.text" placeholder="メモのタイトル")
+    div
+      label 日付：
+      input(type="date" v-model="input.date")
+    div
+      label タグ：
+      input(v-model="input.tags" placeholder="空白区切りで指定")
+    div
+      button(@click="save") 保存
 </template>
+
 
 <script lang="babel">
   export default{
