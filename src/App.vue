@@ -20,7 +20,12 @@
 <template lang="pug">
   #app
     nav-link
-    router-view.contents(:memos="memos" @add="add" @remove="remove")
+    router-view.contents(
+      :memos="memos"
+      @add="add"
+      @remove="remove"
+      count="3"
+      @update="update")
 </template>
 
 
@@ -65,6 +70,13 @@ export default {
         return memo.id === id
       })
       this.memos.splice(index, 1)
+    },
+    update(data){
+      const id = parseInt(data.id, 10)
+      const index = this.memos.findIndex((memo)=>{
+        return memo.id === id
+      })
+      this.memos.splice(index, 1, data)
     }
   },
   components: {

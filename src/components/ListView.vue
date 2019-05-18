@@ -1,8 +1,8 @@
 <template lang="pug">
   .list-view
     div(v-if="hasMemo")
-      list-item(v-for="memo in filteredMemos" :memo="memo" @remove="remove")
-    div(v-else) s表示できるメモがありません。
+      list-item(v-for="memo in filteredMemos" :memo="memo" @remove="remove" @select="select")
+    div(v-else) 表示できるメモがありません。
 
 </template>
 
@@ -36,6 +36,9 @@ export default{
   methods: {
     remove(id) {
       this.$emit('remove', id)
+    },
+    select(id){
+      this.$emit('select',id)
     }
   },
   components: {

@@ -1,3 +1,9 @@
+<style lang="scss" scoped>
+  input:disabled {
+    border-color: transparent;
+  }
+</style>
+
 <template lang="pug">
   .editor-view
     div
@@ -10,12 +16,16 @@
       label タグ：
       input(v-model="input.tags" placeholder="空白区切りで指定")
     div
+      button(@click="cancel" v-if="memo") 戻る
       button(@click="save") 保存
 </template>
 
 
 <script lang="babel">
-  export default{
+export default {
+    props: {
+      memo: Object
+    },
     data() {
       return {
         input: {
@@ -37,7 +47,22 @@
         const data = Object.assign({}, this.input, {tags: this.tagsArr})
         // 'add'イベントを自身にトリガーする
         this.$emit('add', data)
+      },
+      setMemo(){
+        if(this.memo){
+          Object.assign(this.input, this.memo, {tags:this.memo.tags.join(' ')})
+        }
+      },
+      cancel(){
+        this.$emit('cancel')
       }
+    },
+    created(){
+      this.setMemo()
+    },
+    watch: {
+      memo: 'setMemo'
+
     }
   }
 </script>
