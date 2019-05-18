@@ -1,28 +1,36 @@
-<template>
-  <div class="list-view">
-    <div v-if="hasMemo">
-      <list-item
-        v-for="memo in memos"
-        :memo="memo"
-        @remove="remove">
-      </list-item>
-    </div>
+<template lang="pug">
+  .list-view
+    div(v-if="hasMemo")
+      list-item(v-for="memo in filteredMemos" :memo="memo" @remove="remove")
+    div(v-else) s表示できるメモがありません。
 
-    <div v-else>
-      表示できるメモがありません。
-    </div>
-  </div>
 </template>
+
 
 <script lang="babel">
 import ListItem from './ListItem'
 export default{
   props: {
-    memos: Array
+    memos: Array,
+    count: Number,
+    sort: String
   },
   computed: {
     hasMemo() {
-      return this.memos && this.memos.length !== 0
+      return this.filteredMemos && this.filteredMemos.length !== 0
+    },
+    filteredMemos() {
+      let memos = this.memos.concat()
+      if(this.sort) {
+        switch(this.sort) {
+          case 'latest':
+            memos.reverse()
+        }
+      }
+      if(this.count){
+        memos = memos.splice(0, this.count)
+      }
+      return memos
     }
   },
   methods: {

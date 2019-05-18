@@ -1,17 +1,33 @@
-<style>
+<style lang="scss">
   @import '../static/styles.css';
+  html, body {
+    color: #555;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+  }
+  #app {
+    height: 100%;
+    display: flex;
+    .contents {
+      height: 100%;
+      flex-grow: 1;
+      overflow: scroll;
+      box-sizing: border-box;
+    }
+  }
 </style>
-<template>
-  <div id="app">
-    <editor-view @add="add"></editor-view>
-    <list-view :memos="memos" @remove="remove"></list-view>
-  </div>
+<template lang="pug">
+  #app
+    nav-link
+    router-view.contents(:memos="memos" @add="add" @remove="remove")
 </template>
 
-<script lang="babel">
-import EditorView from './components/EditorView'
-import ListView from './components/ListView'
 
+<script lang="babel">
+// import EditorView from './components/EditorView'
+// import ListView from './components/ListView'
+import NavLink from './components/NavLink'
 export default {
   name: 'app',
   data() {
@@ -52,8 +68,9 @@ export default {
     }
   },
   components: {
-    EditorView,
-    ListView
+    // EditorView,
+    // ListView,
+    NavLink
   }
 }
 </script>
