@@ -22,7 +22,7 @@
 
 
 <script lang="babel">
-export default {
+export default{
     props: {
       memo: Object
     },
@@ -37,32 +37,28 @@ export default {
     },
     computed: {
       tagsArr() {
-        // input.tags の文字列を空白で区切って配列に変換する
         return this.input.tags.trim() !== '' ? this.input.tags.trim().split(/\s+/) : []
       }
     },
     methods: {
       save() {
-        // this.input のクローンを生成する
         const data = Object.assign({}, this.input, {tags: this.tagsArr})
-        // 'add'イベントを自身にトリガーする
         this.$emit('add', data)
       },
-      setMemo(){
-        if(this.memo){
-          Object.assign(this.input, this.memo, {tags:this.memo.tags.join(' ')})
-        }
-      },
-      cancel(){
+      cancel() {
         this.$emit('cancel')
+      },
+      setMemo() {
+        if (this.memo) {
+          Object.assign(this.input, this.memo, {tags: this.memo.tags.join(' ')})
+        }
       }
     },
-    created(){
+    created() {
       this.setMemo()
     },
     watch: {
       memo: 'setMemo'
-
     }
   }
 </script>

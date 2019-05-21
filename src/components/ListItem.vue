@@ -18,7 +18,7 @@
       span
         span(v-for="tag in memo.tags") {{tag}}
     div
-      button(@click="remove(memo.id)")
+      button(@click.stop="remove(memo.id)")
         | 削除
 </template>
 
@@ -26,7 +26,8 @@
 <script lang="babel">
 export default{
   props: {
-    memo: Object
+    memo: Object,
+    edit: Boolean
   },
   methods: {
     remove(id) {

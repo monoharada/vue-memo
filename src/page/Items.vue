@@ -14,7 +14,7 @@
 <template lang="pug">
   div.layout-items
     list-view.layout-items-left(
-      :memos="memos"
+      :memos="sharedState.memos"
       @remove="remove"
       @select="select")
     router-view.layout-items-right(
@@ -25,31 +25,46 @@
 
 <script>
 import ListView from '../components/ListView'
+import store from '../store'
 export default {
-  props: {
-    memos:Array
+  data(){
+    return{
+      sharedState: store.state
+    }
   },
+  // props: {
+  //   memos:Array
+  // },
   computed:{
     selectedMemo(){
-      if(this.$route.params.id !== undefined){ // id がある場合は `/items/:id` へのアクセス
-        const id = parseInt(this.$route.params.id, 10)
-        const memo = this.memos.find((memo) => {
-          return memo.id === id
+      const id = this.$route.params.id
+      if(id !== undefined) {
+        const memo = this.sharedState.memos.find((memo) =>{
+          return memo.id === parseInt(id,0)
         })
-        return memo // id が一致するメモのデータを返す
+        return memo
       }
+      // if(this.$route.params.id !== undefined){ // id がある場合は `/items/:id` へのアクセス
+      //   const id = parseInt(this.$route.params.id, 10)
+      //   const memo = this.memos.find((memo) => {
+      //     return memo.id === id
+      //   })
+      //   return memo // id が一致するメモのデータを返す
+      // }
     }
 
      },
   methods:{
     remove(id){
-      this.$emit('remove', id)
+      store.actions.removeMemo(id)
+      // this.$emit('remove', id)
     },
     select(id){
       this.$router.push({name:'edit', params:{id}})
     },
     update(data){
-      this.$emit('update',data)
+      store.actions.updateMemo(data)
+      // this.$emit('update',data)
       this.$router.push({name: 'items'})
     },
     cancel(){
