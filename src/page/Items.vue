@@ -25,13 +25,13 @@
 
 <script>
 import ListView from '../components/ListView'
-import store from '../store'
+// import store from '../store'
 export default {
-  data(){
-    return{
-      sharedState: store.state
-    }
-  },
+  // data(){
+  //   return{
+  //     sharedState: store.state
+  //   }
+  // },
   // props: {
   //   memos:Array
   // },
@@ -51,19 +51,24 @@ export default {
       //   })
       //   return memo // id が一致するメモのデータを返す
       // }
+    },
+    sharedState() {
+      return this.$store.state
     }
 
      },
   methods:{
     remove(id){
-      store.actions.removeMemo(id)
+      this.$store.commit('removeMemo', id)
+      // store.actions.removeMemo(id)
       // this.$emit('remove', id)
     },
     select(id){
       this.$router.push({name:'edit', params:{id}})
     },
     update(data){
-      store.actions.updateMemo(data)
+      this.$store.commit('updateMemo', data)
+      // store.actions.updateMemo(data)
       // this.$emit('update',data)
       this.$router.push({name: 'items'})
     },

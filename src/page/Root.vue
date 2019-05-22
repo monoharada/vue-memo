@@ -10,23 +10,30 @@
 
 <script>
 import ListView from '../components/ListView'
-import store from '../store'
+// import store from '../store'
 export default {
   data(){
     return {
-      sharedState: store.state,
+      // sharedState: store.state,
       privateState: {
         count: 3,
         sort: 'latest'
       }
     }
   },
+  computed:{
+    sharedState() {
+      return this.$store.state
+    }
+
+  },
   // props:{
   //   memos:Array
   // },
   methods:{
     remove(id){
-      store.actions.removeMemo(id)
+      // store.actions.removeMemo(id)
+      this.$store.commit('removeMemo', id)
       // this.$emit('remove', id)
     }
   },
